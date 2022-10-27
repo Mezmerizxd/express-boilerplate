@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped&display=swap');
+
+.App-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #2c363d;
+    .App {
+        font-family: 'IBM Plex Sans Thai Looped', sans-serif;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        color: rgb(220, 220, 220);
+
+        h1 {
+            font-size: 3.5rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+            padding-bottom: 5px;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+    nginx:
+        depends_on:
+            - app
+        restart: always
+        image: express-boilerplate-nginx
+        container_name: 'express-boilerplate-nginx'
+        ports:
+            - '80:80'
+            - '443:443'
+            
+    app:
+        image: express-boilerplate-server
+        container_name: 'express-boilerplate-server'
+        volumes:
+            - .:/usr/src/
+            - '/usr/src/node_modules'
+        working_dir: /usr/src
+        ports:
+            - 3001:3001
+            - 3002:3002
