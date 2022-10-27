@@ -22,11 +22,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: Installing dependencies
     - run: yarn
-    - name: Compiling a production build
     - run: yarn build --if-present
-    - name: Running tests
     - run: yarn test --if-present
-    - name: Formatting the code
     - run: yarn format --if-present
