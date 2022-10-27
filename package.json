@@ -48,7 +48,7 @@
     "cl_build": "react-app-rewired build",
     "cl_dev": "set PORT=3000 && react-app-rewired start",
     "sv_dev": "concurrently \"npx tsc --project tsconfig.server.json --watch\" \"nodemon -q release/server/index.js\"",
-    "docker_build": "docker build -t express-boilerplate-server . && docker build -t express-boilerplate-nginx nginx/",
+    "docker_build": "docker build -t express-boilerplate-server . && cd docker && docker build -t express-boilerplate-nginx nginx/",
     "format": "npx prettier --write ./src/server && npx prettier --write ./src/client",
     "lint:fix": "eslint --fix ./src/**/*.ts && eslint --fix ./src/**/*.tsx"
   },
