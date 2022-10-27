@@ -4,7 +4,6 @@ import './styles.scss';
 
 export default function App() {
     const [count, setCount] = useState(null);
-    const [socket, setSocket] = useState(null);
 
     useEffect(() => {
         const socket = socketIOClient(
@@ -15,7 +14,6 @@ export default function App() {
         socket.on('count_update', (retData) => {
             setCount(retData);
         });
-        setSocket(socket);
         return () => socket.close();
     }, []);
 
