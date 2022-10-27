@@ -3,6 +3,7 @@ import Log from '../utils/Log';
 
 import Cors from './cors';
 import Http from './http';
+import Statics from './statics';
 import Monitor from './monitor';
 
 export default new (class Middlewares {
@@ -14,6 +15,7 @@ export default new (class Middlewares {
 
         Cors.Initialize(app);
         Http.Initialize(app);
+        Statics.Initialize(app);
         Monitor.Initialize(app);
         Log.info('[Middlewares] Initialized.');
         return app;

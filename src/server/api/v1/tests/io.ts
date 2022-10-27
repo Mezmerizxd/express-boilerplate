@@ -1,7 +1,7 @@
 import * as socketio from 'socket.io';
 import Log from '../../../utils/Log';
 
-let serverRuntimeCount: number = 1;
+let serverRuntimeCount = 1;
 setInterval(() => {
     serverRuntimeCount++;
 }, 1000);

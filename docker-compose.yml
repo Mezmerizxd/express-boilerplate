@@ -5,25 +5,19 @@ services:
         depends_on:
             - app
         restart: always
-        image: nginx
-        build: 
-            context: ./nginx
-            dockerfile: Dockerfile
-        container_name: 'nginx'
+        image: express-boilerplate-nginx
+        container_name: 'express-boilerplate-nginx'
         ports:
             - '80:80'
             - '443:443'
             
     app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        container_name: 'app'
+        image: express-boilerplate-server
+        container_name: 'express-boilerplate-server'
         volumes:
             - .:/usr/src/
             - '/usr/src/node_modules'
         working_dir: /usr/src
-        command: sh -c "yarn && yarn sv_build && yarn cl_build && yarn sv_start"
         ports:
             - 3001:3001
             - 3002:3002

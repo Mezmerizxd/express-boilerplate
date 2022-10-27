@@ -40,13 +40,17 @@
     "webpack-cli": "^4.10.0"
   },
   "scripts": {
+    "start": "cross-env NODE_ENV=production node release/server/index.js",
+    "build": "react-app-rewired build && npx tsc --project tsconfig.server.json && rm ./release/**/**/**/*.map",
+    "deploy": "docker-compose up -d",
+    "dev": "concurrently \"npx tsc --project tsconfig.server.json --watch\" \"yarn cl_dev\" \"nodemon -q release/server/index.js\"",
     "sv_build": "npx tsc --project tsconfig.server.json",
     "cl_build": "react-app-rewired build",
-    "cl_start": "set PORT=3000 && react-app-rewired start",
-    "sv_start": "cross-env NODE_ENV=production node release/server/index.js",
+    "cl_dev": "set PORT=3000 && react-app-rewired start",
     "sv_dev": "concurrently \"npx tsc --project tsconfig.server.json --watch\" \"nodemon -q release/server/index.js\"",
+    "docker_build": "docker build -t express-boilerplate-server . && docker build -t express-boilerplate-nginx nginx/",
     "format": "npx prettier --write ./src/server && npx prettier --write ./src/client",
-    "lint:fix": "eslint --fix ./src/server/**/*.ts"
+    "lint:fix": "eslint --fix ./src/**/*.ts && eslint --fix ./src/**/*.tsx"
   },
   "browserslist": {
     "production": [

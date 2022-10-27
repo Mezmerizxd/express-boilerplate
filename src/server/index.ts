@@ -1,7 +1,6 @@
 import * as express from 'express';
 import Log from './utils/Log';
 import Config from './config';
-import * as path from 'path';
 
 import Middlewares from './middlewares';
 
@@ -19,24 +18,6 @@ Middlewares.Initialize(app);
 
 // Routes
 app.use('/api/v1', v1);
-
-// Statics
-app.use(
-    express.static(
-        path.join(
-            __dirname,
-            `../../release/client/`
-        )
-    )
-);
-app.get("/*", (req, res) => {
-    res.sendFile(
-        path.join(
-            __dirname,
-            `../../release/client/index.html`
-        )
-    );
-})
 
 io.on('connection', (socket) => {
     Log.debug('[Server] [IO] Connection to socket created.');
