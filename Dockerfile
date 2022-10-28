@@ -6,7 +6,7 @@ COPY ./package.json ./
 
 COPY . .
 
-RUN yarn
+RUN yarn --production=true
 
 RUN yarn build
 

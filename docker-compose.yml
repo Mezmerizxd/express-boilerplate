@@ -2,10 +2,13 @@ version: '3.8'
 
 services:
     nginx:
+        build: 
+            context: .
+            dockerfile: nginx/Dockerfile
         depends_on:
             - app
         restart: always
-        image: express-boilerplate-nginx
+        image: nginx
         container_name: 'express-boilerplate-nginx'
         ports:
             - '80:80'
@@ -13,8 +16,35 @@ services:
             
     app:
         image: express-boilerplate-server
+        restart: always
         container_name: 'express-boilerplate-server'
         working_dir: /usr/src
         ports:
             - 3001:3001
             - 3002:3002
+
+    mongodb:
+        image: mongo:5.0
+        container_name: mongodb
+        restart: always
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - /data/db
+        ports:
+            - '27017:27017'
+
+    mysql:
+        image: mysql:5.7
+        container_name: mysql
+        restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=express_boilerplate
+            - MYSQL_USER=express_boilerplate_user
+            - MYSQL_PASSWORD=boilerplate
+        volumes:
+            - /var/lib/mysql
+        ports:
+            - '3306:3306'

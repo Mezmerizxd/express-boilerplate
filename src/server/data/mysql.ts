@@ -4,16 +4,32 @@ import Log from '../utils/Log';
 import Config from '../config';
 
 export default new (class MySql {
+    private host: string =
+        process.env.NODE_ENV === 'production'
+            ? Config.Env().mySqlHost
+            : Config.Env().mySqlDevHost;
+    private user: string =
+        process.env.NODE_ENV === 'production'
+            ? Config.Env().mySqlUser
+            : Config.Env().mySqlDevUser;
+    private password: string =
+        process.env.NODE_ENV === 'production'
+            ? Config.Env().mySqlPaswd
+            : Config.Env().mySqlDevPaswd;
+    private database: string =
+        process.env.NODE_ENV === 'production'
+            ? Config.Env().mySqlDb
+            : Config.Env().mySqlDevDb;
     private connection: mysql.Connection;
     private connected: boolean;
 
     constructor() {
         if (Config.Env().mySqlEnabled === 'true') {
             this.connection = mysql.createConnection({
-                host: Config.Env().mySqlHost,
-                user: Config.Env().mySqlUser,
-                password: Config.Env().mySqlPaswd,
-                database: Config.Env().mySqlDb,
+                host: this.host,
+                user: this.user,
+                password: this.password,
+                database: this.database,
             });
 
             this.connection.connect((err) => {
@@ -55,6 +71,28 @@ export default new (class MySql {
             } catch (error) {
                 Log.error(`[Data] [MySql] Something went wrong, ${error}`);
             }
+        }
+    };
+
+    public Test = () => {
+        if (Config.Env().mySqlEnabled === 'true') {
+            this.connection = mysql.createConnection({
+                host: this.host,
+                user: this.user,
+                password: this.password,
+                database: this.database,
+            });
+
+            this.connection.connect((err) => {
+                if (err) {
+                    Log.warn(`[Data] [MySql] Test failed, ${err.message}`);
+                    return;
+                }
+                this.connected = true;
+                Log.debug('[Data] [MySql] Test successful.');
+            });
+        } else {
+            Log.warn(`[Data] [MySql] Test failed, MySql is not enabled.`);
         }
     };
 })();
