@@ -4,6 +4,6 @@ import Demo from './demo';
 
 const r = Router();
 
-r.get('/demo', Demo.Perform);
+r.post('/demo', Demo.Perform);
 
 export default r;

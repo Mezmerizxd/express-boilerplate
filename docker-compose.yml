@@ -14,9 +14,6 @@ services:
     app:
         image: express-boilerplate-server
         container_name: 'express-boilerplate-server'
-        volumes:
-            - .:/usr/src/
-            - '/usr/src/node_modules'
         working_dir: /usr/src
         ports:
             - 3001:3001
