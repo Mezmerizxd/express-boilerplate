@@ -3,6 +3,11 @@ import Log from '../utils/Log';
 import Config from '../config';
 
 export default new (class MongoDb {
+    private host: string =
+        process.env.NODE_ENV === 'production'
+            ? Config.Env().mongoDbHost
+            : Config.Env().mongoDbDevHost;
+
     private options: any = {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -12,7 +17,7 @@ export default new (class MongoDb {
     };
 
     private client: mongo.MongoClient = new mongo.MongoClient(
-        Config.Env().mongoDbHost,
+        this.host,
         this.options
     );
 
@@ -43,7 +48,11 @@ export default new (class MongoDb {
             try {
                 await this.client.connect();
                 const mongoCollection = this.client
-                    .db(Config.Env().mongoDbDb)
+                    .db(
+                        process.env.NODE_ENV === 'production'
+                            ? Config.Env().mongoDbDb
+                            : Config.Env().mongoDbDevDb
+                    )
                     .collection(collection);
                 return await callback(mongoCollection);
             } catch (error) {
@@ -51,6 +60,28 @@ export default new (class MongoDb {
             } finally {
                 await this.client.close();
             }
+        }
+    };
+
+    public Test = async () => {
+        if (Config.Env().mongoDbEnabled === 'true') {
+            try {
+                await this.client.connect();
+                const mongo = this.client.db(
+                    process.env.NODE_ENV === 'production'
+                        ? Config.Env().mongoDbDb
+                        : Config.Env().mongoDbDevDb
+                );
+                if (mongo) {
+                    Log.debug('[Data] [MongoDb] Test successful.');
+                }
+            } catch (error) {
+                Log.warn(`[Data] [MongoDb] Test failed, ${error}`);
+            } finally {
+                await this.client.close();
+            }
+        } else {
+            Log.warn(`[Data] [MongoDb] Test failed, MongoDb is not enabled.`);
         }
     };
 })();

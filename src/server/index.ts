@@ -3,6 +3,7 @@ import Log from './utils/Log';
 import Config from './config';
 
 import Middlewares from './middlewares';
+import Data from './data';
 
 import v1 from './api/v1';
 import Io from './api/v1/io';
@@ -12,6 +13,9 @@ const http = require('http').Server(app);
 const io = require('socket.io')(Config.Env().socketPort, {
     cors: { origin: '*', methods: 'GET,HEAD,PUT,PATCH,POST,DELETE' },
 });
+
+// Data
+Data.Initialize();
 
 // Middlewares
 Middlewares.Initialize(app);
