@@ -4,27 +4,33 @@ import Log from '../utils/Log';
 import Config from '../config';
 
 export default new (class MySql {
-    private host: string =
-        process.env.NODE_ENV === 'production'
-            ? Config.Env().mySqlHost
-            : Config.Env().mySqlDevHost;
-    private user: string =
-        process.env.NODE_ENV === 'production'
-            ? Config.Env().mySqlUser
-            : Config.Env().mySqlDevUser;
-    private password: string =
-        process.env.NODE_ENV === 'production'
-            ? Config.Env().mySqlPaswd
-            : Config.Env().mySqlDevPaswd;
-    private database: string =
-        process.env.NODE_ENV === 'production'
-            ? Config.Env().mySqlDb
-            : Config.Env().mySqlDevDb;
+    private host: string;
+    private user: string;
+    private password: string;
+    private database: string;
     private connection: mysql.Connection;
     private connected: boolean;
 
     constructor() {
         if (Config.Env().mySqlEnabled === 'true') {
+            this.host =
+                process.env.NODE_ENV === 'production'
+                    ? Config.Env().mySqlHost
+                    : Config.Env().mySqlDevHost;
+            this.user =
+                process.env.NODE_ENV === 'production'
+                    ? Config.Env().mySqlUser
+                    : Config.Env().mySqlDevUser;
+            this.password =
+                process.env.NODE_ENV === 'production'
+                    ? Config.Env().mySqlPaswd
+                    : Config.Env().mySqlDevPaswd;
+
+            this.database =
+                process.env.NODE_ENV === 'production'
+                    ? Config.Env().mySqlDb
+                    : Config.Env().mySqlDevDb;
+
             this.connection = mysql.createConnection({
                 host: this.host,
                 user: this.user,

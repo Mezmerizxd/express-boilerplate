@@ -14,14 +14,14 @@ const io = require('socket.io')(Config.Env().socketPort, {
     cors: { origin: '*', methods: 'GET,HEAD,PUT,PATCH,POST,DELETE' },
 });
 
-// Data
-Data.Initialize();
-
 // Middlewares
 Middlewares.Initialize(app);
 
 // Routes
 app.use('/api/v1', v1);
+
+// Data
+Data.Initialize();
 
 io.on('connection', (socket) => {
     Log.debug('[Server] [IO] Connection to socket created.');

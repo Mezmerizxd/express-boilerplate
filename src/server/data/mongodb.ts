@@ -3,26 +3,24 @@ import Log from '../utils/Log';
 import Config from '../config';
 
 export default new (class MongoDb {
-    private host: string =
-        process.env.NODE_ENV === 'production'
-            ? Config.Env().mongoDbHost
-            : Config.Env().mongoDbDevHost;
-
-    private options: any = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        serverApi: '1',
-        connectTimeoutMS: 30000,
-        keepAlive: true,
-    };
-
-    private client: mongo.MongoClient = new mongo.MongoClient(
-        this.host,
-        this.options
-    );
+    private host: string;
+    private options: any;
+    private client: mongo.MongoClient;
 
     constructor() {
         if (Config.Env().mongoDbEnabled === 'true') {
+            this.host =
+                process.env.NODE_ENV === 'production'
+                    ? Config.Env().mongoDbHost
+                    : Config.Env().mongoDbDevHost;
+            this.options = {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                serverApi: '1',
+                connectTimeoutMS: 30000,
+                keepAlive: true,
+            };
+            this.client = new mongo.MongoClient(this.host, this.options);
             try {
                 this.client
                     .connect()
