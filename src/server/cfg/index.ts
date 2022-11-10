@@ -33,7 +33,7 @@ type EnvReturn = {
     firebaseTokenUri: any;
     firebaseAuthProviderCertUrl: any;
     firebaseClientCertUrl: any;
-}
+};
 
 type LocalReturn = {
     fbDbName: string;
